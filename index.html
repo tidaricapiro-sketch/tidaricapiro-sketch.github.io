@@ -135,7 +135,9 @@
 
     <script>
         // --- 1. SET THE NAME HERE ---
-        const NAME = "Divya"; 
+        // This looks at the URL for "?name=..."
+        const urlParams = new URLSearchParams(window.location.search);
+        const NAME = urlParams.get('name') || "Baby";
 
         // --- 2. THE 50 "NO" BUTTON PHRASES ---
         const noButtonTexts = [
@@ -239,4 +241,5 @@
         }
     </script>
 </body>
+
 </html>
