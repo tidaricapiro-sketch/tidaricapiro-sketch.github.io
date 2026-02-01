@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise ❤️</title>
+    <style>
+        :root {
+            --pink-main: #d11a5e;
+            --pink-light: #ffe4e1;
+            --pink-button: #ff4d6d;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--pink-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #header-container {
+            z-index: 500; 
+            pointer-events: none; 
+            position: relative;
+            padding: 20px;
+            min-height: 100px;
+        }
+
+        h1 { 
+            color: var(--pink-main); 
+            font-size: 2.5rem; 
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.8);
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            min-height: 250px;
+            position: relative;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yesBtn {
+            background-color: var(--pink-button);
+            color: white;
+            z-index: 100;
+            position: relative;
+            animation: pulse 1.5s infinite;
+        }
+
+        #noBtn {
+            background-color: #777;
+            color: white;
+            z-index: 999; /* Top Layer */
+            position: relative; 
+        }
+
+        #successMessage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--pink-light);
+            z-index: 2000;
+        }
+
+        #successMessage img {
+            width: 280px;
+            border-radius: 25px;
+            margin: 30px 0;
+        }
+
+        .heart {
+            position: fixed;
+            top: -10%;
+            animation: fall linear forwards;
+            z-index: 5;
+            user-select: none;
+        }
+
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mainContent" class="ui-container">
+        <div id="header-container">
+            <h1 id="question">Will you be my Valentine? ❤️</h1>
+        </div>
+        
+        <div class="button-group">
+            <button id="yesBtn" class="btn">YES!</button>
+            <button id="noBtn" class="btn">No</button>
+        </div>
+    </div>
+
+    <div id="successMessage">
+        <h1 id="finalMessage"></h1>
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpoZ3IyNG9lNGVoZTJzcmhwa295M2p4eW5sNmYxb2FhbWw0N2k4diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1JmGiBtqTuehfYxuy9/giphy.gif">
+        <p style="font-size: 1.8rem; color: var(--pink-main); font-weight: bold;">I love you! 🥰</p>
+    </div>
+
+    <audio id="loveSong" loop>
+        <source src="doron.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // --- 1. SET THE NAME HERE ---
+        const NAME = "Divya"; 
+
+        // --- 2. THE 50 "NO" BUTTON PHRASES ---
+        const noButtonTexts = [
+            "No", "Are you sure?", "Think again!", "Pshhh", "Not today", 
+            "Try harder!", "Missed me!", "Nope!", "Haha!", "Wait...", 
+            "Really?", "Think about it!", "Is that your final answer?", "You're joking!", "Click YES!", 
+            "Don't do this", "My heart...", "I'm crying", "You're mean!", "Error 404",
+            "Access Denied", "Try again", "Almost had it!", "Too slow!", "Zap!",
+            "Still no?", "Seriously?", "Come on!", "Divya please!", "Endless No",
+            "You can't catch me", "I'm a ninja", "Butterfingers!", "Look over there!", "Psych!",
+            "Maybe?", "Nah", "Never!", "Impossible", "No Way!",
+            "Keep trying", "Getting warmer", "Cold!", "Freezing!", "Just give up",
+            "Say Yes!", "The button is tired", "I'm running away!", "Bye!", "Last chance?"
+        ];
+
+        // --- 3. THE 50 FUNNY HEADER MESSAGES ---
+        const funnyHeaderMessages = [
+            "Wait, did you try to click No? 🤨", "Is your mouse broken? 🖱️", "Please say yessss! 🥺",
+            "Stop running! 😂", "You're very persistent...", "Just give up and say YES! ❤️",
+            "I can do this all day! 🏃‍♂️", "Error: 'No' not allowed!", "My heart is breaking... 💔",
+            "You're fast, but I'm faster!", "Is that a 'No' or a mistake?", "I'll wait... ⏳",
+            "Don't be like that!", "You're testing my patience! 😤", "Surely you meant the pink button?",
+            "I'm not leaving until you say yes!", "Click it. You know you want to.", "Destiny awaits!",
+            "Resistance is futile!", "Aha! Missed again!", "You're making this difficult!",
+            "Is this a game to you? 🎮", "I'm getting dizzy! 😵", "Look at the size of that YES button!",
+            "It's getting bigger for a reason!", "Give in to the love! 🥰", "No is not an option.",
+            "I've coded this to be impossible!", "You're stubborn, I like that.", "But seriously, say yes.",
+            "My CSS is stronger than your will!", "Are we still doing this?", "I have 1000 more messages.",
+            "Okay, that was close!", "Your aim is a bit off.", "Try using your other hand?",
+            "Maybe if you close your eyes?", "I'm starting to think you LIKE this game.", "Caught in a loop!",
+            "The 'No' button has left the chat.", "Why are you like this? 😂", "Just one little click...",
+            "Think of the puppies! 🐶", "Think of the chocolate! 🍫", "Divya, stop! haha",
+            "I can see you trying!", "Almost!", "Not quite!", "Try again, champ!", "Victory is near (if you click Yes)!"
+        ];
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainContent = document.getElementById('mainContent');
+        const successMessage = document.getElementById('successMessage');
+        const loveSong = document.getElementById('loveSong');
+        const questionText = document.getElementById('question');
+        
+        questionText.innerText = `Will you be my Valentine, ${NAME}? ❤️`;
+
+        let noCount = 0;
+        let yesScale = 1;
+
+        function moveButton() {
+            if (noCount === 0) noBtn.style.position = 'fixed';
+
+            noCount++;
+            yesScale += 0.22; // Faster growth for a 50-click journey
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Change header message
+            const headerMsg = funnyHeaderMessages[Math.min(noCount, funnyHeaderMessages.length - 1)];
+            questionText.innerText = headerMsg;
+
+            // Change No button text
+            const btnMsg = noButtonTexts[Math.min(noCount, noButtonTexts.length - 1)];
+            noBtn.innerText = btnMsg;
+
+            const padding = 120;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.floor(Math.random() * (maxX - padding) + padding);
+            const randomY = Math.floor(Math.random() * (maxY - padding) + padding);
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        yesBtn.addEventListener('click', () => {
+            mainContent.style.display = 'none';
+            successMessage.style.display = 'flex';
+            
+            document.getElementById('finalMessage').innerText = noCount > 0 
+                ? `I knew it! You tried to say No ${noCount} times, but love wins! ❤️`
+                : `Yay! I knew you'd say Yes, ${NAME}! ❤️`;
+            
+            loveSong.play().catch(() => {});
+            startHearts();
+        });
+
+        function startHearts() {
+            const emojis = ['❤️', '💖', '💝', '💕', '💗', '🌹'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 25 + 20 + 'px';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 150);
+        }
+    </script>
+</body>
+</html>
