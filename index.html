@@ -44,27 +44,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px;
+            gap: 20px;
             min-height: 250px;
             position: relative;
             width: 100%;
         }
 
+        /* 1. MAKE BUTTON TEXT SMALLER */
         .btn {
-            padding: 18px 40px;
-            font-size: 1.5rem;
+            padding: 12px 24px; /* Reduced padding */
+            font-size: 1.2rem;  /* Reduced font size */
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap; /* Keeps name on one line if possible */
         }
 
         #yesBtn {
             background-color: var(--pink-button);
             color: white;
-            z-index: 100;
+            z-index: 1000; /* 2. YES BUTTON IS NOW ON TOP LAYER */
             position: relative;
             animation: pulse 1.5s infinite;
         }
@@ -72,7 +74,7 @@
         #noBtn {
             background-color: #777;
             color: white;
-            z-index: 999; /* Top Layer */
+            z-index: 100; /* 2. NO BUTTON IS NOW ON BOTTOM LAYER */
             position: relative; 
         }
 
@@ -139,38 +141,37 @@
         const urlParams = new URLSearchParams(window.location.search);
         const NAME = urlParams.get('name') || "Baby";
 
-        // --- 2. THE 50 "NO" BUTTON PHRASES ---
+        // --- 3. UPDATED ARRAYS WITH NAME & NO "DIVYA" ---
         const noButtonTexts = [
-            "No", "Are you sure?", "Think again!", "Pshhh", "Not today", 
-            "Try harder!", "Missed me!", "Nope!", "Haha!", "Wait...", 
-            "Really?", "Think about it!", "Is that your final answer?", "You're joking!", "Click YES!", 
-            "Don't do this", "My heart...", "I'm crying", "You're mean!", "Error 404",
-            "Access Denied", "Try again", "Almost had it!", "Too slow!", "Zap!",
-            "Still no?", "Seriously?", "Come on!", "Divya please!", "Endless No",
-            "You can't catch me", "I'm a ninja", "Butterfingers!", "Look over there!", "Psych!",
-            "Maybe?", "Nah", "Never!", "Impossible", "No Way!",
-            "Keep trying", "Getting warmer", "Cold!", "Freezing!", "Just give up",
-            "Say Yes!", "The button is tired", "I'm running away!", "Bye!", "Last chance?"
+            "No", "Nope", "Why?", "Please?", "Really?", 
+            "Think again", "Try harder", "Missed!", "Too slow", "So mean",
+            "Click Yes", "Wrong one", "Help me", "Denied", "Error 404",
+            "Stop it", "Too fast", "Cant catch", "Ninja mode", "Psych!",
+            "Seriously?", "Come on", "Say Yes", "Please!", "Not No",
+            "Almost", "Too bad", "Look here", "Over here", "Try again",
+            "Maybe?", "Nah", "Never!", "No Way", "Impossible",
+            "Keep trying", "So cold", "Freezing", "Give up", "Love you",
+            "Be nice", "Running", "Bye!", "Last chance", "Endless no"
         ];
 
-        // --- 3. THE 50 FUNNY HEADER MESSAGES ---
+        // --- UPDATED: Header Messages (Name used in ~20/50) ---
         const funnyHeaderMessages = [
-            "Wait, did you try to click No? 🤨", "Is your mouse broken? 🖱️", "Please say yessss! 🥺",
-            "Stop running! 😂", "You're very persistent...", "Just give up and say YES! ❤️",
-            "I can do this all day! 🏃‍♂️", "Error: 'No' not allowed!", "My heart is breaking... 💔",
-            "You're fast, but I'm faster!", "Is that a 'No' or a mistake?", "I'll wait... ⏳",
-            "Don't be like that!", "You're testing my patience! 😤", "Surely you meant the pink button?",
-            "I'm not leaving until you say yes!", "Click it. You know you want to.", "Destiny awaits!",
-            "Resistance is futile!", "Aha! Missed again!", "You're making this difficult!",
-            "Is this a game to you? 🎮", "I'm getting dizzy! 😵", "Look at the size of that YES button!",
-            "It's getting bigger for a reason!", "Give in to the love! 🥰", "No is not an option.",
-            "I've coded this to be impossible!", "You're stubborn, I like that.", "But seriously, say yes.",
-            "My CSS is stronger than your will!", "Are we still doing this?", "I have 1000 more messages.",
-            "Okay, that was close!", "Your aim is a bit off.", "Try using your other hand?",
-            "Maybe if you close your eyes?", "I'm starting to think you LIKE this game.", "Caught in a loop!",
-            "The 'No' button has left the chat.", "Why are you like this? 😂", "Just one little click...",
-            "Think of the puppies! 🐶", "Think of the chocolate! 🍫", "Divya, stop! haha",
-            "I can see you trying!", "Almost!", "Not quite!", "Try again, champ!", "Victory is near (if you click Yes)!"
+            "Wait, did you try to click No? 🤨", `Is your mouse broken, ${NAME}? 🖱️`, "Please say yessss! 🥺",
+            "Stop running! 😂", `${NAME}, you're very persistent...`, "Just give up and say YES! ❤️",
+            "I can do this all day! 🏃‍♂️", `Error: 'No' not allowed for ${NAME}!`, "My heart is breaking... 💔",
+            "You're fast, but I'm faster!", `Is that a 'No' or a mistake, ${NAME}?`, "I'll wait... ⏳",
+            `Don't be like that, ${NAME}!`, "You're testing my patience! 😤", "Surely you meant the pink button?",
+            `I'm not leaving until ${NAME} says yes!`, "Click it. You know you want to.", "Destiny awaits!",
+            `Resistance is futile, ${NAME}!`, "Aha! Missed again!", "You're making this difficult!",
+            `Is this a game to you, ${NAME}? 🎮`, "I'm getting dizzy! 😵", `Look at the size of that YES button, ${NAME}!`,
+            "It's getting bigger for a reason!", "Give in to the love! 🥰", `No is not an option, ${NAME}.`,
+            "I've coded this to be impossible!", `${NAME}, you're stubborn (I like that).`, "But seriously, say yes.",
+            "My love is stronger than your will!", `Are we still doing this, ${NAME}?`, "I have 1000 more messages.",
+            "Okay, that was close!", `Your aim is a bit off, ${NAME}.`, "Try using your other hand?",
+            `Maybe if you close your eyes, ${NAME}?`, "I'm starting to think you LIKE this game.", "Caught in a loop!",
+            `The 'No' button is scared of ${NAME}.`, "Why are you like this? 😂", "Just one little click...",
+            `Think of the puppies, ${NAME}! 🐶`, "Think of the chocolate! 🍫", "Stop it! haha",
+            `I can see you trying, ${NAME}!`, "Almost!", "Not quite!", `Try again, ${NAME}!`, "Victory is near!"
         ];
 
         const noBtn = document.getElementById('noBtn');
@@ -180,7 +181,9 @@
         const loveSong = document.getElementById('loveSong');
         const questionText = document.getElementById('question');
         
+        // --- 4. INSERT NAME INTO INITIAL TEXTS ---
         questionText.innerText = `Will you be my Valentine, ${NAME}? ❤️`;
+        yesBtn.innerText = `YES!`; // Name in the Yes button
 
         let noCount = 0;
         let yesScale = 1;
@@ -189,7 +192,7 @@
             if (noCount === 0) noBtn.style.position = 'fixed';
 
             noCount++;
-            yesScale += 0.22; // Faster growth for a 50-click journey
+            yesScale += 0.22; 
             yesBtn.style.transform = `scale(${yesScale})`;
 
             // Change header message
@@ -200,7 +203,7 @@
             const btnMsg = noButtonTexts[Math.min(noCount, noButtonTexts.length - 1)];
             noBtn.innerText = btnMsg;
 
-            const padding = 120;
+            const padding = 50; // Reduced padding to fit screen better
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             
@@ -241,5 +244,4 @@
         }
     </script>
 </body>
-
 </html>
